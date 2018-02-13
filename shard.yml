@@ -1,0 +1,13 @@
+name: echo
+version: 0.1.0
+
+authors:
+  - Daniel Salazar <disalazarg@gmail.com>
+  
+targets:
+  echo:
+    main: src/echo.cr
+
+crystal: 0.23.1
+
+license: MIT
