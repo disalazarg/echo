@@ -5,14 +5,16 @@ module Echo
   class Server
     property json   : String?
     property server : HTTP::Server
+    property port   : Int32
 
     def initialize(options)
       # JSON response file provided
+      @port = options.port
       if options.file && File.exists?(options.file.as(String))
         @json = JSON.parse(File.read(options.file.as(String))).to_json
       end
 
-      @server = HTTP::Server.new options.port do |context|
+      @server = HTTP::Server.new do |context|
         if options.cors
           context.response.headers["Access-Control-Allow-Origin"]  = "*"
           context.response.headers["Access-Control-Allow-Methods"] = "*"
@@ -26,6 +28,7 @@ module Echo
     end
 
     def listen
+      @server.bind_tcp @port
       @server.listen
     end
 
